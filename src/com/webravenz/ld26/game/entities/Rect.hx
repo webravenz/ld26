@@ -28,7 +28,7 @@ class Rect extends Entity
 		
 	}
 	
-	public override function _update():Void {
+	private override function _update():Void {
 		_speedY = Game.speed;
 		
 		super._update();

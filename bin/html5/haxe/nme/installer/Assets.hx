@@ -3,6 +3,7 @@ package nme.installer;
 
 import format.display.MovieClip;
 import haxe.Unserializer;
+import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.media.Sound;
 import nme.net.URLRequest;
@@ -10,8 +11,8 @@ import nme.text.Font;
 import nme.utils.ByteArray;
 import ApplicationMain;
 
-#if swf
-import format.SWF;
+#if swfdev
+import format.swf.lite.SWFLite;
 #end
 
 #if xfl
@@ -25,15 +26,16 @@ import format.XFL;
  */
 
 class Assets {
-
+	
 	
 	public static var cachedBitmapData:Hash<BitmapData> = new Hash<BitmapData>();
-	#if swf private static var cachedSWFLibraries:Hash <SWF> = new Hash <SWF> (); #end
+	#if swfdev private static var cachedSWFLibraries:Hash <SWFLite> = new Hash <SWFLite> (); #end
 	#if xfl private static var cachedXFLLibraries:Hash <XFL> = new Hash <XFL> (); #end
 	
 	private static var initialized:Bool = false;
 	private static var libraryTypes:Hash <String> = new Hash <String> ();
 	private static var resourceClasses:Hash <Dynamic> = new Hash <Dynamic> ();
+	private static var resourceNames:Hash <String> = new Hash <String> ();
 	private static var resourceTypes:Hash <String> = new Hash <String> ();
 	
 	
@@ -41,10 +43,6 @@ class Assets {
 		
 		if (!initialized) {
 			
-			resourceClasses.set ("nme.svg", NME_nme_svg);
-			resourceTypes.set ("nme.svg", "text");
-			resourceClasses.set ("Square.ttf", NME_square_ttf);
-			resourceTypes.set ("Square.ttf", "font");
 			
 			
 			initialized = true;
@@ -58,7 +56,7 @@ class Assets {
 		
 		initialize ();
 		
-		if (resourceTypes.exists (id) && resourceTypes.get (id).toLowerCase () == "image") {
+		if (resourceNames.exists(id) && resourceTypes.exists (id) && resourceTypes.get (id).toLowerCase () == "image") {
 			
 			if (useCache && cachedBitmapData.exists (id)) {
 				
@@ -66,7 +64,10 @@ class Assets {
 				
 			} else {
 				
-				var data = cast (Type.createInstance (resourceClasses.get (id), []), BitmapData);
+				// Should be bitmapData.clone (), but stopped working in recent Jeash builds
+				// Without clone, BitmapData is already cached, so ignoring the hash table for now
+				
+				var data = cast (ApplicationMain.loaders.get (resourceNames.get(id)).contentLoaderInfo.content, Bitmap).bitmapData;
 				
 				if (useCache) {
 					
@@ -78,20 +79,22 @@ class Assets {
 				
 			}
 			
-		} else if (id.indexOf (":") > -1) {
+		}  else if (id.indexOf (":") > -1) {
 			
 			var libraryName = id.substr (0, id.indexOf (":"));
 			var symbolName = id.substr (id.indexOf (":") + 1);
 			
 			if (libraryTypes.exists (libraryName)) {
 				
-				#if swf
+				#if swfdev
 				
 				if (libraryTypes.get (libraryName) == "swf") {
 					
 					if (!cachedSWFLibraries.exists (libraryName)) {
 						
-						cachedSWFLibraries.set (libraryName, new SWF (getBytes ("libraries/" + libraryName + ".swf")));
+						var unserializer = new Unserializer (getText ("libraries/" + libraryName + ".dat"));
+						unserializer.setResolver (cast { resolveEnum: resolveEnum, resolveClass: resolveClass });
+						cachedSWFLibraries.set (libraryName, unserializer.unserialize());
 						
 					}
 					
@@ -138,17 +141,15 @@ class Assets {
 		
 		initialize ();
 		
-		if (resourceClasses.exists (id)) {
+		if (resourceNames.exists (id)) {
 			
-			return Type.createInstance (resourceClasses.get (id), []);
-			
-		} else {
-			
-			trace ("[nme.Assets] There is no ByteArray asset with an ID of \"" + id + "\"");
-			
-			return null;
+			return cast ApplicationMain.urlLoaders.get (getResourceName(id)).data;
 			
 		}
+		
+		trace ("[nme.Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"");
+		
+		return null;
 		
 	}
 	
@@ -157,17 +158,19 @@ class Assets {
 		
 		initialize ();
 		
-		if (resourceTypes.exists (id) && resourceTypes.get (id).toLowerCase () == "font") {
+		if (resourceNames.exists(id) && resourceTypes.exists (id)) {
 			
-			return cast (Type.createInstance (resourceClasses.get (id), []), Font);
-			
-		} else {
-			
-			trace ("[nme.Assets] There is no Font asset with an ID of \"" + id + "\"");
-			
-			return null;
+			if (resourceTypes.get (id).toLowerCase () == "font") {
+				
+				return cast (Type.createInstance (resourceClasses.get (id), []), Font);
+				
+			}
 			
 		}
+		
+		trace ("[nme.Assets] There is no Font asset with an ID of \"" + id + "\"");
+		
+		return null;
 		
 	}
 	
@@ -181,13 +184,15 @@ class Assets {
 		
 		if (libraryTypes.exists (libraryName)) {
 			
-			#if swf
+			#if swfdev
 			
 			if (libraryTypes.get (libraryName) == "swf") {
 				
 				if (!cachedSWFLibraries.exists (libraryName)) {
 					
-					cachedSWFLibraries.set (libraryName, new SWF (getBytes ("libraries/" + libraryName + ".swf")));
+					var unserializer = new Unserializer (getText ("libraries/" + libraryName + ".dat"));
+					unserializer.setResolver (cast { resolveEnum: resolveEnum, resolveClass: resolveClass });
+					cachedSWFLibraries.set (libraryName, unserializer.unserialize());
 					
 				}
 				
@@ -224,15 +229,28 @@ class Assets {
 	}
 	
 	
+	public static function getResourceName (id:String):String {
+		
+		initialize ();
+		
+		return resourceNames.get (id);
+		
+	}
+	
+	
 	public static function getSound (id:String):Sound {
 		
 		initialize ();
 		
-		if (resourceTypes.exists (id)) {
+		if (resourceNames.exists(id) && resourceTypes.exists (id)) {
 			
-			if (resourceTypes.get (id).toLowerCase () == "sound" || resourceTypes.get (id).toLowerCase () == "music") {
+			if (resourceTypes.get (id).toLowerCase () == "sound") {
 				
-				return cast (Type.createInstance (resourceClasses.get (id), []), Sound);
+				return new Sound (new URLRequest (resourceNames.get(id)));
+				
+			} else if (resourceTypes.get (id).toLowerCase () == "music") {
+				
+				return new Sound (new URLRequest (resourceNames.get(id)));
 				
 			}
 			
@@ -247,17 +265,20 @@ class Assets {
 	
 	public static function getText (id:String):String {
 		
-		var bytes = getBytes (id);
+		initialize ();
 		
-		if (bytes == null) {
+		if (resourceNames.exists(id) && resourceTypes.exists (id)) {
 			
-			return null;
-			
-		} else {
-			
-			return bytes.readUTFBytes (bytes.length);
+			if (resourceTypes.get (id).toLowerCase () == "text") {
+				
+				return ApplicationMain.urlLoaders.get (resourceNames.get(id)).data;
+				
+			}
 			
 		}
+		
+		var bytes = getBytes (id);
+		return null;
 		
 	}
 	
@@ -278,6 +299,22 @@ class Assets {
 	//{
 		//return null;
 	//}
+	
+	
+	private static function resolveClass (name:String):Class <Dynamic> {
+		
+		name = StringTools.replace (name, "native.", "browser.");
+		return Type.resolveClass (name);
+		
+	}
+	
+	
+	private static function resolveEnum (name:String):Enum <Dynamic> {
+		
+		name = StringTools.replace (name, "native.", "browser.");
+		return Type.resolveEnum (name);
+		
+	}
 	
 	
 }

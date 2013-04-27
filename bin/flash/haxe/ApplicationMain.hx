@@ -97,6 +97,16 @@ class ApplicationMain {
 	public static function getAsset (inName:String):Dynamic {
 		
 		
+		if (inName=="nme.svg")
+			 
+			 return Assets.getText ("nme.svg");
+         
+		
+		if (inName=="Square.ttf")
+			 
+			 return Assets.getFont ("Square.ttf");
+		 
+		
 		
 		return null;
 		
@@ -116,6 +126,8 @@ class ApplicationMain {
 	
 }
 
+class NME_nme_svg extends nme.utils.ByteArray { }
+class NME_square_ttf extends nme.text.Font { }
 
 
 #else

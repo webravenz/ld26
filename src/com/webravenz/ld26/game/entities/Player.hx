@@ -20,9 +20,12 @@ class Player extends Entity
 	private var _colorCode:Int;
 	
 	public var lose = false;
+	
+	private var _game:Game;
 
-	public function new() 
+	public function new(game:Game) 
 	{
+		_game = game;
 		super();
 	}
 	
@@ -56,7 +59,7 @@ class Player extends Entity
 		
 	}
 	
-	public override function _update():Void {
+	private override function _update():Void {
 		
 		if (Game.controls.left())       _speedX -= _ACCELERATION;
 		else if (Game.controls.right()) _speedX += _ACCELERATION;
@@ -89,7 +92,14 @@ class Player extends Entity
 	}
 	
 	private override function _checkCollisions():Void {
-		lose = true;
+		for (entity in collides) {
+			if (Std.is(entity, Bonus)) {
+				_game.addScore(2);
+				entity.hit(100);
+			} else if (Std.is(entity, Rect)) {
+				lose = true;
+			}
+		}
 	}
 	
 }
