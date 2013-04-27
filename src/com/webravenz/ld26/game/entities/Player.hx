@@ -88,6 +88,7 @@ class Player extends Entity
 			_color = _collideGroup = 1;
 			_colorCode = Game.COLOR1;
 		}
+		_game.setPlayerColor(_color);
 		draw();
 	}
 	

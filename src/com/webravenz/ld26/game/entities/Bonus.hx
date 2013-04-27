@@ -1,6 +1,7 @@
 package com.webravenz.ld26.game.entities;
 import com.webravenz.ld26.display.Entity;
 import com.webravenz.ld26.game.Game;
+import com.webravenz.ld26.game.SoundManager;
 import com.webravenz.ld26.utils.AMath;
 
 /**
@@ -51,6 +52,8 @@ class Bonus extends Entity
 	}
 	
 	public override function hit(power:Int):Void {
+		if(_color == 1) SoundManager.sBonus.play();
+		else SoundManager.sBonus2.play();
 		super.hit(power);
 	}
 	

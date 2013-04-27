@@ -41,10 +41,16 @@ class Assets {
 		
 		if (!initialized) {
 			
-			resourceClasses.set ("nme.svg", NME_nme_svg);
-			resourceTypes.set ("nme.svg", "text");
-			resourceClasses.set ("Square.ttf", NME_square_ttf);
-			resourceTypes.set ("Square.ttf", "font");
+			resourceClasses.set ("assets/font/Square.ttf", NME_assets_font_square_ttf);
+			resourceTypes.set ("assets/font/Square.ttf", "font");
+			resourceClasses.set ("assets/sound/hard_kick.wav", NME_assets_sound_hard_kick_wav);
+			resourceTypes.set ("assets/sound/hard_kick.wav", "sound");
+			resourceClasses.set ("assets/sound/hh_frappe1.wav", NME_assets_sound_hh_frappe1_wav);
+			resourceTypes.set ("assets/sound/hh_frappe1.wav", "sound");
+			resourceClasses.set ("assets/sound/hh_frappe2.wav", NME_assets_sound_hh_frappe2_wav);
+			resourceTypes.set ("assets/sound/hh_frappe2.wav", "sound");
+			resourceClasses.set ("assets/sound/snare_stick.wav", NME_assets_sound_snare_stick_wav);
+			resourceTypes.set ("assets/sound/snare_stick.wav", "sound");
 			
 			
 			initialized = true;

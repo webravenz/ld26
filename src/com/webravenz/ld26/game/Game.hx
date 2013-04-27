@@ -7,6 +7,7 @@ import com.webravenz.ld26.game.entities.Player;
 import com.webravenz.ld26.game.entities.Rect;
 import nme.Assets;
 import nme.events.Event;
+import nme.media.Sound;
 import nme.text.TextField;
 import nme.text.TextFormat;
 import nme.text.TextFormatAlign;
@@ -25,6 +26,7 @@ class Game extends ASprite
 	
 	public static var speed:Float = 1;
 	public static var controls:Controls;
+	public static var playerColor:Int = 1;
 	
 	private var _player:Player;
 	private var _layer:EntitiesLayer;
@@ -46,6 +48,8 @@ class Game extends ASprite
 	
 	private override function _onAddedToStage():Void {
 		
+		var soundManager:SoundManager = new SoundManager();
+		
 		_layer = new EntitiesLayer();
 		addChild(_layer);
 		
@@ -57,7 +61,7 @@ class Game extends ASprite
 		
 		_score = 0;
 		
-		var font = Assets.getFont ("Square.ttf");
+		var font = Assets.getFont ("assets/font/Square.ttf");
 		_scoreFormat = new TextFormat (font.fontName, 24, 0xFFFFFF);
 		_scoreFormat.align = TextFormatAlign.RIGHT;
 		_scoreTxt = new TextField();
@@ -69,6 +73,8 @@ class Game extends ASprite
 		_scoreTxt.y = 10;
 		_scoreTxt.text = ''+_score;
 		addChild(_scoreTxt);
+		
+		var sound:Sound = new Sound();
 		
 		
 		addEventListener(Event.ENTER_FRAME, _update);
@@ -124,11 +130,11 @@ class Game extends ASprite
 		var color2:Int = color1 == 1 ? 2 : 1;
 		
 		var rect1 = new Rect();
-		rect1.init(color1, 0, -35, s, 8);
+		rect1.init(color1, 0, -35, s, 8, true);
 		_layer.addEntity(rect1);
 		
 		var rect2 = new Rect();
-		rect2.init(color2, s, -35, WIDTH - s, 8);
+		rect2.init(color2, s, -35, WIDTH - s, 8, false);
 		_layer.addEntity(rect2);
 	}
 	
@@ -139,6 +145,10 @@ class Game extends ASprite
 			bonus.init();
 			_layer.addEntity(bonus);
 		}
+	}
+	
+	public function setPlayerColor(color:Int):Void {
+		playerColor = color;
 	}
 	
 	/*

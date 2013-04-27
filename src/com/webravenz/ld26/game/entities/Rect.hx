@@ -1,6 +1,8 @@
 package com.webravenz.ld26.game.entities;
 import com.webravenz.ld26.display.Entity;
 import com.webravenz.ld26.game.Game;
+import com.webravenz.ld26.game.SoundManager;
+import nme.media.Sound;
 
 /**
  * ...
@@ -9,13 +11,18 @@ import com.webravenz.ld26.game.Game;
 
 class Rect extends Entity
 {
+	
+	private var _soundPlayed:Bool = false;
+	private var _sound:Bool;
 
 	public function new() 
 	{
 		super();
 	}
 	
-	public function init(color:Int, posX:Int, posY:Int, width:Int, height: Int):Void {
+	public function init(color:Int, posX:Int, posY:Int, width:Int, height: Int, sound:Bool):Void {
+		
+		_sound = sound;
 		
 		x = posX;
 		y = posY;
@@ -32,6 +39,15 @@ class Rect extends Entity
 		_speedY = Game.speed;
 		
 		super._update();
+		
+		if (y > 430 && !_soundPlayed && _sound) {
+			if (Game.playerColor == 1) {
+				SoundManager.sKick.play();
+			} else {
+				SoundManager.sKick2.play();
+			}
+			_soundPlayed = true;
+		}
 		
 		if (y > 500) {
 			_destroy();
