@@ -15,11 +15,13 @@
 	<!-- classpath, haxe libs -->
 	<source path="src" />
 	<haxelib name="nme" />
+	<haxelib name="actuate" />
 	
 	<!-- assets -->
 	<icon path="assets/nme.svg" />
 	<assets path="assets/font" rename="assets/font" type="font" include="*" />
 	<assets path="assets/sound" rename="assets/sound" type="sound" include="*" />
+	<assets path="assets/img" rename="assets/img" type="image" include="*" />
 	
 	<!-- DLLs -->
 	<ndll name="std" />

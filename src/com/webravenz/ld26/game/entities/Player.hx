@@ -86,11 +86,7 @@ class Player extends Entity
 		graphics.clear();
 		graphics.lineStyle(4, _colorCode, 1, false, LineScaleMode.NORMAL, CapsStyle.SQUARE, JointStyle.MITER);
 		if (_color == 1) {
-			graphics.moveTo( -_SIZE, -_SIZE);
-			graphics.lineTo( -_SIZE, _SIZE);
-			graphics.lineTo( _SIZE, _SIZE);
-			graphics.lineTo( _SIZE, -_SIZE);
-			graphics.lineTo( -_SIZE, -_SIZE);
+			graphics.drawRect( -_SIZE, -_SIZE, _SIZE * 2, _SIZE * 2);
 		} else {
 			graphics.drawCircle(0, 0, _SIZE);
 		}

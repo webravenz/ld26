@@ -1,23 +1,27 @@
 package com.webravenz.ld26.game;
 import com.webravenz.ld26.display.ASprite;
 import com.webravenz.ld26.display.EntitiesLayer;
+import com.webravenz.ld26.display.Page;
+import com.webravenz.ld26.display.Home;
 import com.webravenz.ld26.game.data.Sequences;
 import com.webravenz.ld26.game.entities.Bonus;
 import com.webravenz.ld26.game.entities.Player;
 import com.webravenz.ld26.game.entities.Rect;
 import nme.Assets;
 import nme.events.Event;
+import nme.events.KeyboardEvent;
 import nme.media.Sound;
 import nme.text.TextField;
 import nme.text.TextFormat;
 import nme.text.TextFormatAlign;
+import nme.ui.Keyboard;
 
 /**
  * ...
  * @author Webravenz
  */
 
-class Game extends ASprite
+class Game extends Page
 {
 
 	public static var COLOR1:Int = 0xED1A64;
@@ -47,6 +51,7 @@ class Game extends ASprite
 	
 	private override function _onAddedToStage():Void {
 		
+		
 		var soundManager:SoundManager = new SoundManager();
 		
 		_layer = new EntitiesLayer();
@@ -57,6 +62,11 @@ class Game extends ASprite
 		
 		_player = new Player(this);
 		_layer.addEntity(_player);
+		
+		speed = 1;
+		_barTimer = 50;
+		_noBonusTimer = 0;
+		_scoreTimer = 60;
 		
 		_score = 0;
 		
@@ -75,6 +85,12 @@ class Game extends ASprite
 		
 		var sound:Sound = new Sound();
 		
+		super._onAddedToStage();
+		
+		
+	}
+	
+	private override function _init():Void {
 		
 		addEventListener(Event.ENTER_FRAME, _update);
 		
@@ -117,6 +133,15 @@ class Game extends ASprite
 		removeEventListener(Event.ENTER_FRAME, _update);
 		controls.stop();
 		
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+		
+	}
+	
+	private function _onKeyDown(e:KeyboardEvent):Void {
+		if (e.keyCode == Keyboard.SPACE) {
+			targetPage = 'game.Game';
+			_hide();
+		}
 	}
 	
 	private function _createBar() {

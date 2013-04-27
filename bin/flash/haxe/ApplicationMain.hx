@@ -122,6 +122,11 @@ class ApplicationMain {
             return Assets.getSound ("assets/sound/snare_stick.wav");
          
 		
+		if (inName=="assets/img/home.png")
+			 
+            return Assets.getBitmapData ("assets/img/home.png");
+         
+		
 		
 		return null;
 		
@@ -146,6 +151,7 @@ class NME_assets_sound_hard_kick_wav extends nme.media.Sound { }
 class NME_assets_sound_hh_frappe1_wav extends nme.media.Sound { }
 class NME_assets_sound_hh_frappe2_wav extends nme.media.Sound { }
 class NME_assets_sound_snare_stick_wav extends nme.media.Sound { }
+class NME_assets_img_home_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 
 
 #else

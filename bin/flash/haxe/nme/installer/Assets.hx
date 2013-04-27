@@ -51,6 +51,8 @@ class Assets {
 			resourceTypes.set ("assets/sound/hh_frappe2.wav", "sound");
 			resourceClasses.set ("assets/sound/snare_stick.wav", NME_assets_sound_snare_stick_wav);
 			resourceTypes.set ("assets/sound/snare_stick.wav", "sound");
+			resourceClasses.set ("assets/img/home.png", NME_assets_img_home_png);
+			resourceTypes.set ("assets/img/home.png", "image");
 			
 			
 			initialized = true;
