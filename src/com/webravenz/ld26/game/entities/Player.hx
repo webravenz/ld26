@@ -2,7 +2,11 @@ package com.webravenz.ld26.game.entities;
 import com.webravenz.ld26.display.Entity;
 import com.webravenz.ld26.game.Controls;
 import com.webravenz.ld26.game.Game;
+import com.webravenz.ld26.game.SoundManager;
 import com.webravenz.ld26.utils.AMath;
+import nme.display.CapsStyle;
+import nme.display.JointStyle;
+import nme.display.LineScaleMode;
 import nme.events.Event;
 
 /**
@@ -18,6 +22,7 @@ class Player extends Entity
 	
 	private var _color:Int;
 	private var _colorCode:Int;
+	private var _soundPlayed:Bool = false;
 	
 	public var lose = false;
 	
@@ -71,13 +76,24 @@ class Player extends Entity
 		
 		x = AMath.limite(x, _SIZE, 350 - _SIZE);
 		
+		if (_soundPlayed && collides.length == 0) _soundPlayed = false;
+		
 	}
 	
 	private function draw():Void {
 		_collideGroup = _color;
-		graphics.beginFill(_colorCode);
-		graphics.drawCircle(0, 0, _SIZE);
-		graphics.endFill();
+		
+		graphics.clear();
+		graphics.lineStyle(4, _colorCode, 1, false, LineScaleMode.NORMAL, CapsStyle.SQUARE, JointStyle.MITER);
+		if (_color == 1) {
+			graphics.moveTo( -_SIZE, -_SIZE);
+			graphics.lineTo( -_SIZE, _SIZE);
+			graphics.lineTo( _SIZE, _SIZE);
+			graphics.lineTo( _SIZE, -_SIZE);
+			graphics.lineTo( -_SIZE, -_SIZE);
+		} else {
+			graphics.drawCircle(0, 0, _SIZE);
+		}
 	}
 	
 	private function _swapColor(e:Event):Void {
@@ -88,7 +104,6 @@ class Player extends Entity
 			_color = _collideGroup = 1;
 			_colorCode = Game.COLOR1;
 		}
-		_game.setPlayerColor(_color);
 		draw();
 	}
 	
@@ -98,7 +113,20 @@ class Player extends Entity
 				_game.addScore(2);
 				entity.hit(100);
 			} else if (Std.is(entity, Rect)) {
-				lose = true;
+				var rect:Rect = cast(entity, Rect);
+				if(rect.color != _color) {
+					lose = true;
+				} else {
+					if (!_soundPlayed) {
+						_soundPlayed = true;
+						
+						if (_color == 1) {
+							SoundManager.sKick.play();
+						} else {
+							SoundManager.sKick2.play();
+						}
+					}
+				}
 			}
 		}
 	}

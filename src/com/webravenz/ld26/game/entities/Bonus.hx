@@ -3,6 +3,9 @@ import com.webravenz.ld26.display.Entity;
 import com.webravenz.ld26.game.Game;
 import com.webravenz.ld26.game.SoundManager;
 import com.webravenz.ld26.utils.AMath;
+import nme.display.CapsStyle;
+import nme.display.JointStyle;
+import nme.display.LineScaleMode;
 
 /**
  * ...
@@ -46,9 +49,13 @@ class Bonus extends Entity
 	}
 	
 	private function _draw() {
-		graphics.beginFill(_colorCode);
-		graphics.drawRect( -_SIZE / 2, -_SIZE / 2, _SIZE, _SIZE);
-		graphics.endFill();
+		var alt:Float = Math.sqrt(3) / 2 * _SIZE;
+		
+		graphics.lineStyle(3, _colorCode, 1, false, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.MITER);
+		graphics.moveTo(0, -alt / 2 - 1);
+		graphics.lineTo( -_SIZE / 2, alt / 2 - 1);
+		graphics.lineTo( _SIZE / 2, alt / 2 - 1);
+		graphics.lineTo(0, -alt / 2 - 1);
 	}
 	
 	public override function hit(power:Int):Void {

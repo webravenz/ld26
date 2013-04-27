@@ -20,13 +20,12 @@ import nme.text.TextFormatAlign;
 class Game extends ASprite
 {
 
-	public static var COLOR1:Int = 0xffa800;
-	public static var COLOR2:Int = 0x00a8ff;
+	public static var COLOR1:Int = 0xED1A64;
+	public static var COLOR2:Int = 0xBDD631;
 	public static var WIDTH:Int = 350;
 	
 	public static var speed:Float = 1;
 	public static var controls:Controls;
-	public static var playerColor:Int = 1;
 	
 	private var _player:Player;
 	private var _layer:EntitiesLayer;
@@ -130,11 +129,11 @@ class Game extends ASprite
 		var color2:Int = color1 == 1 ? 2 : 1;
 		
 		var rect1 = new Rect();
-		rect1.init(color1, 0, -35, s, 8, true);
+		rect1.init(color1, 0, -35, s, 8);
 		_layer.addEntity(rect1);
 		
 		var rect2 = new Rect();
-		rect2.init(color2, s, -35, WIDTH - s, 8, false);
+		rect2.init(color2, s, -35, WIDTH - s, 8);
 		_layer.addEntity(rect2);
 	}
 	
@@ -145,10 +144,6 @@ class Game extends ASprite
 			bonus.init();
 			_layer.addEntity(bonus);
 		}
-	}
-	
-	public function setPlayerColor(color:Int):Void {
-		playerColor = color;
 	}
 	
 	/*

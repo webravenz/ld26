@@ -7,6 +7,7 @@
 -D web
 --dead-code-elimination
 --js-modern
+-resource C:\wamp\www\ld26\assets\font\Square.ttf.hash@NME_assets_font_square_ttf
 -js bin/html5/bin/LD26.js
 -cp bin/html5/haxe
 -D html5

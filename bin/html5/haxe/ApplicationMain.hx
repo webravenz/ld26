@@ -41,6 +41,11 @@ class ApplicationMain {
 		
 		
 		
+		
+		
+		
+		
+		
 		if (total == 0) {
 			
 			begin ();
@@ -78,6 +83,36 @@ class ApplicationMain {
 
    public static function getAsset(inName:String):Dynamic {
 	   
+		
+		if (inName=="assets/font/Square.ttf") {
+			
+			return Assets.getFont ("assets/font/Square.ttf");
+			
+		}
+		
+		if (inName=="assets/sound/hard_kick.wav") {
+			
+			return Assets.getSound ("assets/sound/hard_kick.wav");
+			
+		}
+		
+		if (inName=="assets/sound/hh_frappe1.wav") {
+			
+			return Assets.getSound ("assets/sound/hh_frappe1.wav");
+			
+		}
+		
+		if (inName=="assets/sound/hh_frappe2.wav") {
+			
+			return Assets.getSound ("assets/sound/hh_frappe2.wav");
+			
+		}
+		
+		if (inName=="assets/sound/snare_stick.wav") {
+			
+			return Assets.getSound ("assets/sound/snare_stick.wav");
+			
+		}
 		
 		return null;
 		
@@ -130,6 +165,18 @@ class ApplicationMain {
 }
 
 
+
+	
+		class NME_assets_font_square_ttf extends nme.text.Font { }
+	
+
+	
+
+	
+
+	
+
+	
 
 
 

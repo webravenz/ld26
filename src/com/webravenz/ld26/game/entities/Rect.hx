@@ -12,22 +12,20 @@ import nme.media.Sound;
 class Rect extends Entity
 {
 	
-	private var _soundPlayed:Bool = false;
-	private var _sound:Bool;
+	public var color:Int;
 
 	public function new() 
 	{
 		super();
 	}
 	
-	public function init(color:Int, posX:Int, posY:Int, width:Int, height: Int, sound:Bool):Void {
-		
-		_sound = sound;
+	public function init(pcolor:Int, posX:Int, posY:Int, width:Int, height: Int):Void {
 		
 		x = posX;
 		y = posY;
+		color = pcolor;
 		
-		_collideGroup = color;
+		_collideGroup = 3;
 		
 		setHitArea(0, 0, width, height);
 		
@@ -39,15 +37,6 @@ class Rect extends Entity
 		_speedY = Game.speed;
 		
 		super._update();
-		
-		if (y > 430 && !_soundPlayed && _sound) {
-			if (Game.playerColor == 1) {
-				SoundManager.sKick.play();
-			} else {
-				SoundManager.sKick2.play();
-			}
-			_soundPlayed = true;
-		}
 		
 		if (y > 500) {
 			_destroy();

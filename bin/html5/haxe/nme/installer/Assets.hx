@@ -44,6 +44,26 @@ class Assets {
 		if (!initialized) {
 			
 			
+			resourceClasses.set ("assets/font/Square.ttf", NME_assets_font_square_ttf);
+			resourceNames.set ("assets/font/Square.ttf", "assets/font/Square.ttf");
+			resourceTypes.set ("assets/font/Square.ttf", "font");
+			
+			
+			resourceNames.set ("assets/sound/hard_kick.wav", "assets/sound/hard_kick.wav");
+			resourceTypes.set ("assets/sound/hard_kick.wav", "sound");
+			
+			
+			resourceNames.set ("assets/sound/hh_frappe1.wav", "assets/sound/hh_frappe1.wav");
+			resourceTypes.set ("assets/sound/hh_frappe1.wav", "sound");
+			
+			
+			resourceNames.set ("assets/sound/hh_frappe2.wav", "assets/sound/hh_frappe2.wav");
+			resourceTypes.set ("assets/sound/hh_frappe2.wav", "sound");
+			
+			
+			resourceNames.set ("assets/sound/snare_stick.wav", "assets/sound/snare_stick.wav");
+			resourceTypes.set ("assets/sound/snare_stick.wav", "sound");
+			
 			
 			initialized = true;
 			
