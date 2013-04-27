@@ -56,7 +56,7 @@ class EntitiesLayer extends ASprite
 	public function addEntity(entity:Entity):Void
 	{
 		
-		addChild(entity);
+		addChildAt(entity, 0);
 		entity.addEventListener(EntityEvent.DESTROYED, _entityDestroyed);
 		
 		_entities.push(entity);

@@ -14,10 +14,12 @@ class Player extends Entity
 {
 	private var _SPEEDMAX:Float = 8;
 	private var _ACCELERATION:Float = 1;
-	private var _SIZE:Int = 12;
+	private var _SIZE:Int = 16;
 	
 	private var _color:Int;
 	private var _colorCode:Int;
+	
+	public var lose = false;
 
 	public function new() 
 	{
@@ -34,6 +36,9 @@ class Player extends Entity
 		_speedY = 0;
 		_speedX = 0;
 		collisionCheck = true;
+		
+		var hitSize:Int = Math.round(_SIZE * 0.8);
+		setHitArea(-hitSize / 2, -hitSize / 2, hitSize, hitSize);
 		
 		_color = _collideGroup = 1;
 		_colorCode = Game.COLOR1;
@@ -81,6 +86,10 @@ class Player extends Entity
 			_colorCode = Game.COLOR1;
 		}
 		draw();
+	}
+	
+	private override function _checkCollisions():Void {
+		lose = true;
 	}
 	
 }
