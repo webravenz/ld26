@@ -3,6 +3,7 @@ package com.webravenz.ld26;
 import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
+import com.webravenz.ld26.game.Game;
 
 /**
  * ...
@@ -24,7 +25,8 @@ class Main extends Sprite
 
 	private function init(e) 
 	{
-		// entry point
+		var game:Game = new Game();
+		addChild(game);
 	}
 	
 	static public function main() 
