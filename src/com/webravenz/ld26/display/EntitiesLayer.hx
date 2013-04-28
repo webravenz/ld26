@@ -25,11 +25,7 @@ class EntitiesLayer extends ASprite
 	public function update():Void {
 		
 		for (entityDel in _entitiesToDelete) {
-			
-			_entities.remove(entityDel);
-			if(contains(entityDel)) removeChild(entityDel);
-			entityDel = null;
-			
+			_removeEntity(entityDel);
 		}
 		
 		_entitiesToDelete = new Array<Entity>();
@@ -52,12 +48,28 @@ class EntitiesLayer extends ASprite
 		
 	}
 	
+	public function clear():Void {
+		for (entityDel in _entities) {
+			_removeEntity(entityDel);
+		}
+	}
+	
+	private function _removeEntity(entity:Entity):Void {
+		
+		entity.removeEventListener(EntityEvent.DESTROYED, _entityDestroyed);
+		_entities.remove(entity);
+		if(contains(entity)) removeChild(entity);
+		entity = null;
+		
+	}
+	
 	// ajout d'une entite dans le calque
 	public function addEntity(entity:Entity):Void
 	{
 		
 		addChildAt(entity, 0);
 		entity.addEventListener(EntityEvent.DESTROYED, _entityDestroyed);
+		entity.layer = this;
 		
 		_entities.push(entity);
 		

@@ -27,6 +27,11 @@ class Player extends Entity
 	public var lose = false;
 	
 	private var _game:Game;
+	
+	public var bonusCount1:Int;
+	public var bonusCount2:Int;
+	public var barCount1:Int;
+	public var barCount2:Int;
 
 	public function new(game:Game) 
 	{
@@ -44,6 +49,8 @@ class Player extends Entity
 		_speedY = 0;
 		_speedX = 0;
 		collisionCheck = true;
+		
+		bonusCount1 = bonusCount2 = barCount1 = barCount2 = 0;
 		
 		var hitSize:Int = Math.round(_SIZE * 0.8);
 		setHitArea(-hitSize / 2, -hitSize / 2, hitSize, hitSize);
@@ -106,8 +113,9 @@ class Player extends Entity
 	private override function _checkCollisions():Void {
 		for (entity in collides) {
 			if (Std.is(entity, Bonus)) {
-				_game.addScore(2);
+				_game.addScore(5);
 				entity.hit(100);
+				_generateParticles(true);
 			} else if (Std.is(entity, Rect)) {
 				var rect:Rect = cast(entity, Rect);
 				if(rect.color != _color) {
@@ -116,14 +124,36 @@ class Player extends Entity
 					if (!_soundPlayed) {
 						_soundPlayed = true;
 						
+						_game.addScore(1);
+						
 						if (_color == 1) {
 							SoundManager.sKick.play();
 						} else {
 							SoundManager.sKick2.play();
 						}
+						_generateParticles(false);
 					}
 				}
 			}
+		}
+	}
+	
+	private function _generateParticles(bonus:Bool):Void {
+		var shape:String = bonus ? 'triangle' : _color == 1 ? 'rect' : 'circle';
+		var num:Int = Math.round(2 * Game.speed);
+		if (num > 7) num = 7;
+		if (bonus) num *= 3;
+		
+		for (i in 0...num) {
+			
+			var speedX:Float = AMath.random( -2, 2);
+			speedX *= Game.speed;
+			var speedY:Float = bonus ? AMath.random( -4, 4) : AMath.random( 0, -5);
+			speedY *= Game.speed;
+			var alphaChange = AMath.random(0.005, 0.02);
+			alphaChange *= Game.speed;
+			var particle:Particle = new Particle(_colorCode, shape, AMath.random(x - 15, x + 15), AMath.random(y - 15, y + 15), speedX, speedY, alphaChange);
+			layer.addEntity(particle);
 		}
 	}
 	

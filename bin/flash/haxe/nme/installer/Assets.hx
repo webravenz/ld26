@@ -41,8 +41,8 @@ class Assets {
 		
 		if (!initialized) {
 			
-			resourceClasses.set ("assets/font/Square.ttf", NME_assets_font_square_ttf);
-			resourceTypes.set ("assets/font/Square.ttf", "font");
+			resourceClasses.set ("assets/font/Roboto-Condensed.ttf", NME_assets_font_roboto_condensed_ttf);
+			resourceTypes.set ("assets/font/Roboto-Condensed.ttf", "font");
 			resourceClasses.set ("assets/sound/hard_kick.wav", NME_assets_sound_hard_kick_wav);
 			resourceTypes.set ("assets/sound/hard_kick.wav", "sound");
 			resourceClasses.set ("assets/sound/hh_frappe1.wav", NME_assets_sound_hh_frappe1_wav);
@@ -53,6 +53,8 @@ class Assets {
 			resourceTypes.set ("assets/sound/snare_stick.wav", "sound");
 			resourceClasses.set ("assets/img/home.png", NME_assets_img_home_png);
 			resourceTypes.set ("assets/img/home.png", "image");
+			resourceClasses.set ("assets/img/score.png", NME_assets_img_score_png);
+			resourceTypes.set ("assets/img/score.png", "image");
 			
 			
 			initialized = true;

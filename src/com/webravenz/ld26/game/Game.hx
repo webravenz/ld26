@@ -40,7 +40,6 @@ class Game extends Page
 	private var _scoreTxt:TextField;
 	private var _scoreFormat:TextFormat;
 	private var _score:Int;
-	private var _scoreTimer:Int = 60;
 
 	public function new() 
 	{
@@ -50,9 +49,6 @@ class Game extends Page
 	}
 	
 	private override function _onAddedToStage():Void {
-		
-		
-		var soundManager:SoundManager = new SoundManager();
 		
 		_layer = new EntitiesLayer();
 		addChild(_layer);
@@ -66,11 +62,10 @@ class Game extends Page
 		speed = 1;
 		_barTimer = 50;
 		_noBonusTimer = 0;
-		_scoreTimer = 60;
 		
 		_score = 0;
 		
-		var font = Assets.getFont ("assets/font/Square.ttf");
+		var font = Assets.getFont ("assets/font/Roboto-Condensed.ttf");
 		_scoreFormat = new TextFormat (font.fontName, 24, 0xFFFFFF);
 		_scoreFormat.align = TextFormatAlign.RIGHT;
 		_scoreTxt = new TextField();
@@ -109,12 +104,6 @@ class Game extends Page
 		
 		speed += 0.001;
 		
-		_scoreTimer--;
-		if (_scoreTimer <= 0) {
-			_scoreTimer = 60;
-			this.addScore(1);
-		}
-		
 		if (_player.lose) _over();
 	}
 	
@@ -132,16 +121,14 @@ class Game extends Page
 		
 		removeEventListener(Event.ENTER_FRAME, _update);
 		controls.stop();
-		
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+		targetPage = 'display.Score';
+		_hide();
 		
 	}
 	
-	private function _onKeyDown(e:KeyboardEvent):Void {
-		if (e.keyCode == Keyboard.SPACE) {
-			targetPage = 'game.Game';
-			_hide();
-		}
+	private override function _hideComplete():Void {
+		_layer.clear();
+		super._hideComplete();
 	}
 	
 	private function _createBar() {

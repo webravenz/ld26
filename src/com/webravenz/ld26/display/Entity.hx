@@ -23,6 +23,8 @@ class Entity extends ASprite
 	private var _area:Rectangle;
 	public var collisionCheck:Bool = false;
 	
+	public var layer:EntitiesLayer;
+	
 	public function new() 
 	{
 		super();

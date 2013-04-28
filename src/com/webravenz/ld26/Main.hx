@@ -1,6 +1,8 @@
 package com.webravenz.ld26;
 
 import com.webravenz.ld26.display.Page;
+import com.webravenz.ld26.display.Score;
+import com.webravenz.ld26.game.SoundManager;
 import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
@@ -27,8 +29,9 @@ class Main extends Sprite
 	}
 
 	private function init(e) 
-	{
-		_showPage('display.Home');
+	{ 
+		var soundManager:SoundManager = new SoundManager();
+		_showPage('display.Score');
 	}
 	
 	private function _showPage(pageName:String) {

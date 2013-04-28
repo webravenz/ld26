@@ -97,9 +97,9 @@ class ApplicationMain {
 	public static function getAsset (inName:String):Dynamic {
 		
 		
-		if (inName=="assets/font/Square.ttf")
+		if (inName=="assets/font/Roboto-Condensed.ttf")
 			 
-			 return Assets.getFont ("assets/font/Square.ttf");
+			 return Assets.getFont ("assets/font/Roboto-Condensed.ttf");
 		 
 		
 		if (inName=="assets/sound/hard_kick.wav")
@@ -127,6 +127,11 @@ class ApplicationMain {
             return Assets.getBitmapData ("assets/img/home.png");
          
 		
+		if (inName=="assets/img/score.png")
+			 
+            return Assets.getBitmapData ("assets/img/score.png");
+         
+		
 		
 		return null;
 		
@@ -146,12 +151,13 @@ class ApplicationMain {
 	
 }
 
-class NME_assets_font_square_ttf extends nme.text.Font { }
+class NME_assets_font_roboto_condensed_ttf extends nme.text.Font { }
 class NME_assets_sound_hard_kick_wav extends nme.media.Sound { }
 class NME_assets_sound_hh_frappe1_wav extends nme.media.Sound { }
 class NME_assets_sound_hh_frappe2_wav extends nme.media.Sound { }
 class NME_assets_sound_snare_stick_wav extends nme.media.Sound { }
 class NME_assets_img_home_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+class NME_assets_img_score_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 
 
 #else
