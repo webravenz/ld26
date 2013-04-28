@@ -108,6 +108,7 @@ class Player extends Entity
 			_color = _collideGroup = 1;
 			_colorCode = Game.COLOR1;
 		}
+		SoundManager.sSpace.play();
 		draw();
 	}
 	
@@ -121,7 +122,8 @@ class Player extends Entity
 				_generateParticles(true);
 			} else if (Std.is(entity, Rect)) {
 				var rect:Rect = cast(entity, Rect);
-				if(rect.color != _color) {
+				if (rect.color != _color) {
+					SoundManager.sDeath.play();
 					lose = true;
 				} else {
 					if (!_soundPlayed) {

@@ -1,5 +1,6 @@
 package com.webravenz.ld26.display;
 import com.webravenz.ld26.game.Game;
+import com.webravenz.ld26.game.SoundManager;
 import nme.display.Sprite;
 import nme.text.Font;
 import nme.events.KeyboardEvent;
@@ -142,7 +143,8 @@ class Score extends Page
 	}
 	
 	private function _onKeyDown(e:KeyboardEvent):Void {
-		if (e.keyCode == Keyboard.SPACE) {
+		if (e.keyCode == Keyboard.SPACE) { 
+			SoundManager.sSpace.play();
 			_hide();
 		}
 	}

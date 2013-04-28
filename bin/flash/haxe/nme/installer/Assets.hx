@@ -45,10 +45,14 @@ class Assets {
 			resourceTypes.set ("assets/font/Roboto-Condensed.ttf", "font");
 			resourceClasses.set ("assets/sound/hard_kick.wav", NME_assets_sound_hard_kick_wav);
 			resourceTypes.set ("assets/sound/hard_kick.wav", "sound");
+			resourceClasses.set ("assets/sound/hh_ferm.wav", NME_assets_sound_hh_ferm_wav);
+			resourceTypes.set ("assets/sound/hh_ferm.wav", "sound");
 			resourceClasses.set ("assets/sound/hh_frappe1.wav", NME_assets_sound_hh_frappe1_wav);
 			resourceTypes.set ("assets/sound/hh_frappe1.wav", "sound");
-			resourceClasses.set ("assets/sound/hh_frappe2.wav", NME_assets_sound_hh_frappe2_wav);
-			resourceTypes.set ("assets/sound/hh_frappe2.wav", "sound");
+			resourceClasses.set ("assets/sound/ride_bord.wav", NME_assets_sound_ride_bord_wav);
+			resourceTypes.set ("assets/sound/ride_bord.wav", "sound");
+			resourceClasses.set ("assets/sound/snare_fla.wav", NME_assets_sound_snare_fla_wav);
+			resourceTypes.set ("assets/sound/snare_fla.wav", "sound");
 			resourceClasses.set ("assets/sound/snare_stick.wav", NME_assets_sound_snare_stick_wav);
 			resourceTypes.set ("assets/sound/snare_stick.wav", "sound");
 			resourceClasses.set ("assets/img/controls.png", NME_assets_img_controls_png);

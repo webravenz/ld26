@@ -1,4 +1,5 @@
 package com.webravenz.ld26.display;
+import com.webravenz.ld26.game.SoundManager;
 import nme.events.KeyboardEvent;
 import nme.ui.Keyboard;
 import nme.Assets;
@@ -33,6 +34,7 @@ class Home extends Page
 	
 	private function _onKeyDown(e:KeyboardEvent):Void {
 		if (e.keyCode == Keyboard.SPACE) {
+			SoundManager.sSpace.play();
 			_hide();
 		}
 	}
