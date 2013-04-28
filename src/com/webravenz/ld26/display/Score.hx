@@ -1,5 +1,6 @@
 package com.webravenz.ld26.display;
 import com.webravenz.ld26.game.Game;
+import nme.display.Sprite;
 import nme.text.Font;
 import nme.events.KeyboardEvent;
 import nme.text.TextField;
@@ -27,6 +28,16 @@ class Score extends Page
 	private var _txtScore:TextField;
 	private var _txtBonus1:TextField;
 	private var _txtBonus2:TextField;
+	private var _txtBar1:TextField;
+	private var _txtBar2:TextField;
+	
+	private var _barGraph:Sprite;
+	
+	public static var score:Int = 0;
+	public static var bonus1:Int = 0;
+	public static var bonus2:Int = 0;
+	public static var bar1:Int = 0;
+	public static var bar2:Int = 0;
 
 	public function new() 
 	{
@@ -56,29 +67,72 @@ class Score extends Page
 		_txtScore.width = 350;
 		_txtScore.x = 0;
 		_txtScore.y = 160;
-		_txtScore.text = '1200';
+		_txtScore.text = ''+score;
 		addChild(_txtScore);
 		
 		_txtBonus1 = new TextField();
 		_txtBonus1.defaultTextFormat = _format1;
 		_txtBonus1.selectable = false;
 		_txtBonus1.embedFonts = true;
-		_txtBonus1.width = 120;
-		_txtBonus1.x = 230;
+		_txtBonus1.width = 90;
+		_txtBonus1.x = 260;
 		_txtBonus1.y = 237;
-		_txtBonus1.text = '41';
+		_txtBonus1.text = ''+bonus1;
 		addChild(_txtBonus1);
 		
 		_txtBonus2 = new TextField();
 		_txtBonus2.defaultTextFormat = _format2;
 		_txtBonus2.selectable = false;
 		_txtBonus2.embedFonts = true;
-		_txtBonus2.width = 120;
+		_txtBonus2.width = 90;
 		_txtBonus2.x = 0;
 		_txtBonus2.y = 237;
-		_txtBonus2.text = '32';
+		_txtBonus2.text = ''+bonus2;
 		addChild(_txtBonus2);
 		
+		_txtBar1 = new TextField();
+		_txtBar1.defaultTextFormat = _format1;
+		_txtBar1.selectable = false;
+		_txtBar1.embedFonts = true;
+		_txtBar1.width = 90;
+		_txtBar1.x = 260;
+		_txtBar1.y = 280;
+		_txtBar1.text = ''+bar1;
+		addChild(_txtBar1);
+		
+		_txtBar2 = new TextField();
+		_txtBar2.defaultTextFormat = _format2;
+		_txtBar2.selectable = false;
+		_txtBar2.embedFonts = true;
+		_txtBar2.width = 90;
+		_txtBar2.x = 0;
+		_txtBar2.y = 280;
+		_txtBar2.text = ''+bar2;
+		addChild(_txtBar2);
+		
+		// draw bars
+		var percent1:Float = 0.5;
+		var percent2:Float = 0.5;
+		var total:Int = bar1 + bar2;
+		
+		if (total > 0) {
+			percent1 = bar1 / total;
+			percent2 = bar2 / total;
+		}
+		
+		_barGraph = new Sprite();
+		_barGraph.x = 100;
+		_barGraph.y = 289;
+		
+		_barGraph.graphics.beginFill(Game.COLOR1);
+		_barGraph.graphics.drawRect(percent2 * 150, 0, percent1 * 150, 6);
+		_barGraph.graphics.endFill();
+		
+		_barGraph.graphics.beginFill(Game.COLOR2);
+		_barGraph.graphics.drawRect(0, 0, percent2 * 150, 6);
+		_barGraph.graphics.endFill();
+		
+		addChild(_barGraph);
 		
 		super._onAddedToStage();
 	}

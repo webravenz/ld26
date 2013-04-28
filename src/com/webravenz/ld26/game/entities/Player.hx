@@ -1,5 +1,6 @@
 package com.webravenz.ld26.game.entities;
 import com.webravenz.ld26.display.Entity;
+import com.webravenz.ld26.display.Score;
 import com.webravenz.ld26.game.Controls;
 import com.webravenz.ld26.game.Game;
 import com.webravenz.ld26.game.SoundManager;
@@ -114,6 +115,8 @@ class Player extends Entity
 		for (entity in collides) {
 			if (Std.is(entity, Bonus)) {
 				_game.addScore(5);
+				if (_color == 1) Score.bonus1++;
+				else             Score.bonus2++;
 				entity.hit(100);
 				_generateParticles(true);
 			} else if (Std.is(entity, Rect)) {
@@ -125,6 +128,8 @@ class Player extends Entity
 						_soundPlayed = true;
 						
 						_game.addScore(1);
+						if (_color == 1) Score.bar1++;
+						else             Score.bar2++;
 						
 						if (_color == 1) {
 							SoundManager.sKick.play();

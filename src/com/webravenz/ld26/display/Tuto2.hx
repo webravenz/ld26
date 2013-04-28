@@ -9,7 +9,7 @@ import nme.display.Bitmap;
  * @author Webravenz
  */
 
-class Home extends Page
+class Tuto2 extends Page
 {
 	
 	private var _image:Bitmap;
@@ -21,7 +21,7 @@ class Home extends Page
 	
 	private override function _onAddedToStage():Void {
 		
-		_image = new Bitmap(Assets.getBitmapData('assets/img/home.png'));
+		_image = new Bitmap(Assets.getBitmapData('assets/img/gameplay.png'));
 		addChild(_image);
 		
 		super._onAddedToStage();
@@ -41,7 +41,7 @@ class Home extends Page
 		removeChild(_image);
 		_image = null;
 		
-		targetPage = 'display.Tuto1';
+		targetPage = 'game.Game';
 		
 		stage.removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 		

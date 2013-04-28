@@ -3,6 +3,7 @@ import com.webravenz.ld26.display.ASprite;
 import com.webravenz.ld26.display.EntitiesLayer;
 import com.webravenz.ld26.display.Page;
 import com.webravenz.ld26.display.Home;
+import com.webravenz.ld26.display.Score;
 import com.webravenz.ld26.game.data.Sequences;
 import com.webravenz.ld26.game.entities.Bonus;
 import com.webravenz.ld26.game.entities.Player;
@@ -63,7 +64,7 @@ class Game extends Page
 		_barTimer = 50;
 		_noBonusTimer = 0;
 		
-		_score = 0;
+		_score = Score.bar1 = Score.bar2 = Score.bonus1 = Score.bonus2 = Score.score = 0;
 		
 		var font = Assets.getFont ("assets/font/Roboto-Condensed.ttf");
 		_scoreFormat = new TextFormat (font.fontName, 24, 0xFFFFFF);
@@ -118,7 +119,7 @@ class Game extends Page
 	}
 	
 	private function _over() {
-		
+		Score.score = _score;
 		removeEventListener(Event.ENTER_FRAME, _update);
 		controls.stop();
 		targetPage = 'display.Score';
@@ -133,7 +134,7 @@ class Game extends Page
 	
 	private function _createBar() {
 		_barTimer = 160;
-		_noBonusTimer = 25;
+		_noBonusTimer = 60;
 		
 		var s:Int = Math.round(WIDTH * Math.random());
 		
@@ -141,17 +142,18 @@ class Game extends Page
 		var color2:Int = color1 == 1 ? 2 : 1;
 		
 		var rect1 = new Rect();
-		rect1.init(color1, 0, -35, s, 8);
+		rect1.init(color1, 0, -50, s, 8);
 		_layer.addEntity(rect1);
 		
 		var rect2 = new Rect();
-		rect2.init(color2, s, -35, WIDTH - s, 8);
+		rect2.init(color2, s, -50, WIDTH - s, 8);
 		_layer.addEntity(rect2);
 	}
 	
 	// create bonus randomly
 	private function _createBonus():Void {
-		if (Math.random() > 0.99 && _noBonusTimer <= 0) {
+		var chanceBonus:Float = speed / 320;
+		if (Math.random() <= chanceBonus && _noBonusTimer <= 0) {
 			var bonus = new Bonus();
 			bonus.init();
 			_layer.addEntity(bonus);
